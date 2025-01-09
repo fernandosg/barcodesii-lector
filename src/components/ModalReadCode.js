@@ -47,7 +47,7 @@ export default function ModalReadCode({ open, setOpen }) {
           Leer código QR
         </Typography>
         <Typography id="modal-modal-description" variant="body1" component="p">
-          {siiCode}
+          Sii code:{siiCode}
         </Typography>
         <Button variant="contained" onClick={enableCamera}>
           Habilitar cámara
@@ -58,7 +58,7 @@ export default function ModalReadCode({ open, setOpen }) {
         <Button variant="contained" onClick={handleClose}>
           Cerrar lectura
         </Button>
-        <div id="camera-view-container" sx={{ width: '100%', height: '70vh' }}>
+        <div id="camera-view-container" sx={{ width: '70%', height: '70vh' }}>
           {cameraViewElement && (
             <div
               ref={(node) => {

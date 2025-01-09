@@ -22,12 +22,12 @@ export default function DynamsoftReader() {
 
       cvRouter.current = await CaptureVisionRouter.createInstance(cameraView)
       cvRouter.current.setInput(cameraEnhancer.current)
-
+      let _resultText = ''
       cvRouter.current.addResultReceiver({
         onDecodedBarcodesReceived: (result) => {
           if (!result.barcodeResultItems.length) return
 
-          let _resultText = ''
+          _resultText = ''
           console.log(result)
           for (let item of result.barcodeResultItems) {
             _resultText += `${item.formatString}: ${item.text}\n\n`
@@ -35,7 +35,7 @@ export default function DynamsoftReader() {
           setSiiCode(_resultText)
         }
       })
-
+      if (_resultText.length > 0) console.log('Encontre algo' + _resultText)
       filter = new MultiFrameResultCrossFilter()
       filter.enableResultCrossVerification('barcode', true)
       filter.enableResultDeduplication('barcode', true)

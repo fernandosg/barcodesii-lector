@@ -18,20 +18,16 @@ export default function DynamsoftReader() {
     enableCamera()
   }, [])
 
-  const enableCamera = () => {
+  const enableCamera = async () => {
     try {
-      const cameraView = cameraView.createInstance()
-      cameraEnhancer = CameraEnhancer.createInstance(cameraView)
-      //document
-      //  .querySelector('#camera-view-container')
-      //  .append(cameraView.getUIElement()) // Get default UI and append it to DOM.
+      const cameraView = await CameraView.createInstance()
+      cameraEnhancer.current = await CameraEnhancer.createInstance(cameraView)
       setCameraViewElement(cameraView.getUIElement())
 
-      cvRouter = CaptureVisionRouter.createInstance(cameraView) // ESTO INICIAILMENTE NO TENÍA ARGUMENTO
-      cvRouter.setInput(cameraEnhancer)
+      cvRouter.current = await CaptureVisionRouter.createInstance(cameraView)
+      cvRouter.current.setInput(cameraEnhancer.current)
 
-      // Definir un callback para los resultados.
-      cvRouter.addResultReceiver({
+      cvRouter.current.addResultReceiver({
         onDecodedBarcodesReceived: (result) => {
           if (!result.barcodeResultItems.length) return
 
@@ -44,22 +40,17 @@ export default function DynamsoftReader() {
         }
       })
 
-      // Filtrar resultados no verificados y duplicados.
       filter = new MultiFrameResultCrossFilter()
-      filter.enableResultCrossVerification('barcode', true) // Filtrar códigos de barras no verificados.
-      filter.enableResultDeduplication('barcode', true) // Filtrar códigos de barras duplicados dentro de 3 segundos.
-      cvRouter.addResultFilter(filter)
-      // ----
-
-      // Abrir la cámara y comenzar a escanear un solo código de barras.
-      cameraEnhancer.open()
+      filter.enableResultCrossVerification('barcode', true)
+      filter.enableResultDeduplication('barcode', true)
+      cvRouter.current.addResultFilter(filter)
+      await cameraEnhancer.current.open()
       cameraView.setScanLaserVisible(true)
 
-      cvRouter.startCapturing('ReadSingleBarcode')
+      cvRouter.current.startCapturing('ReadSingleBarcode')
     } catch (ex) {
       let errMsg = ex.message || ex
       console.error(errMsg)
-      //alert(errMsg)
     }
   }
 

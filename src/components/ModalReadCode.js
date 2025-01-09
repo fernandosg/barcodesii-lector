@@ -55,8 +55,6 @@ export default function ModalReadCode({ open, setOpen }) {
         <Button variant="contained" onClick={handleClose}>
           Cerrar lectura
         </Button>
-      </Box>
-      <Box sx={style}>
         <div id="camera-view-container">
           {cameraViewElement && (
             <div

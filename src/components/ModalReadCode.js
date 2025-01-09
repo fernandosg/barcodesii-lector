@@ -21,7 +21,7 @@ const style = {
 
 export default function ModalReadCode({ open, setOpen }) {
   const { siiCode } = useSIICode()
-  const { cameraViewElement } = DynamsoftReader()
+  const { cameraViewElement, enableCamera } = DynamsoftReader()
   const handleOpen = () => {
     setOpen(true)
   }
@@ -49,6 +49,9 @@ export default function ModalReadCode({ open, setOpen }) {
         <Typography id="modal-modal-description" variant="body1" component="p">
           {siiCode}
         </Typography>
+        <Button variant="contained" onClick={enableCamera}>
+          Habilitar cámara
+        </Button>
         <Button variant="contained" onClick={handleCopySIICode}>
           Copiar código SII
         </Button>

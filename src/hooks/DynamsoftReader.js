@@ -14,10 +14,6 @@ export default function DynamsoftReader() {
   const cvRouter = React.useRef(null)
   let filter = null
 
-  React.useEffect(() => {
-    enableCamera()
-  }, [])
-
   const enableCamera = async () => {
     try {
       const cameraView = await CameraView.createInstance()
@@ -54,5 +50,5 @@ export default function DynamsoftReader() {
     }
   }
 
-  return { cameraViewElement }
+  return { cameraViewElement, enableCamera }
 }

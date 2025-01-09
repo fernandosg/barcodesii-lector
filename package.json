@@ -6,6 +6,7 @@
     "cra-template": "1.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "workbox-build": "^7.3.0",
@@ -45,5 +46,5 @@
   "devDependencies": {
     "gh-pages": "^6.3.0"
   },
-  "homepage": "https://fernandosg.github.io/barcodesii-lector.github.io"
+  "homepage": "https://fernandosg.github.io/barcodesii-lector"
 }

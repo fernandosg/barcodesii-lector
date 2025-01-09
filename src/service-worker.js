@@ -46,19 +46,43 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 )
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
+// Cache the Dynamsoft CDN resources
 registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) =>
-    url.origin === self.location.origin && url.pathname.endsWith('.png'),
-  // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ url }) => url.href.includes('cdn.jsdelivr.net/npm/dynamsoft-barcode-reader'),
+  new StaleWhileRevalidate({
+    cacheName: 'dynamsoft-resources',
+    plugins: [
+      new ExpirationPlugin({ maxEntries: 20 })
+    ]
+  })
+)
+
+// Cache image files
+registerRoute(
+  ({ request }) => request.destination === 'image',
   new StaleWhileRevalidate({
     cacheName: 'images',
     plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 })
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+      })
+    ]
+  })
+)
+
+// Cache CSS and JavaScript files
+registerRoute(
+  ({ request }) =>
+    request.destination === 'script' ||
+    request.destination === 'style',
+  new StaleWhileRevalidate({
+    cacheName: 'static-resources',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 32,
+        maxAgeSeconds: 24 * 60 * 60 // 24 hours
+      })
     ]
   })
 )

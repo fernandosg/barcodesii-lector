@@ -58,7 +58,7 @@ export default function ModalReadCode({ open, setOpen }) {
         <Button variant="contained" onClick={handleClose}>
           Cerrar lectura
         </Button>
-        <div id="camera-view-container">
+        <div id="camera-view-container" sx={{ height: '70vh' }}>
           {cameraViewElement && (
             <div
               ref={(node) => {

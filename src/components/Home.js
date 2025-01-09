@@ -1,24 +1,24 @@
 import React from 'react'
 import logo from '../logo.svg'
 import '../App.css'
+import { Button } from '@mui/material'
+import ModalReadCode from './ModalReadCode'
+import { SIICodeProvider } from '../contexts/SIICodeContext'
 
 function Home() {
+  const [open, setOpen] = React.useState(false)
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Button variant="contained" onClick={() => setOpen(true)}>
+          Read Code
+        </Button>
       </header>
+      <SIICodeProvider>
+        <ModalReadCode open={open} setOpen={setOpen} />
+      </SIICodeProvider>
     </div>
   )
 }

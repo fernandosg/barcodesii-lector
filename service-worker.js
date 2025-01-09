@@ -15,6 +15,9 @@ const cacheName = 'helloworld-pwa'
 const appShellFiles = [
   './index.html',
   './helloworld-pwa.json',
+  './dynamsoft-192x192.png',
+  './dynamsoft-512x512.png',
+  './favicon.ico',
   `${engineResourcePaths.std}std.js`,
   `${engineResourcePaths.std}std.wasm`,
   `${engineResourcePaths.dip}dip.wasm`,

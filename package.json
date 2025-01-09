@@ -9,18 +9,20 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "workbox-build": "^7.3.0",
-    "workbox-webpack-plugin": "^7.3.0",
     "workbox-core": "^6.6.0",
     "workbox-expiration": "^6.6.0",
     "workbox-precaching": "^6.6.0",
     "workbox-routing": "^6.6.0",
-    "workbox-strategies": "^6.6.0"
+    "workbox-strategies": "^6.6.0",
+    "workbox-webpack-plugin": "^7.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +41,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  },
+  "homepage": "https://fernandosg.github.io/barcodesii-lector.github.io"
 }

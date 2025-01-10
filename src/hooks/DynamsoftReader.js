@@ -63,5 +63,5 @@ export default function DynamsoftReader() {
     }
   }
 
-  return { cameraViewElement, enableCamera }
+  return { cameraViewElement, enableCamera, stopScanning }
 }

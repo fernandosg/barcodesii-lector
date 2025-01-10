@@ -21,12 +21,13 @@ const style = {
 
 export default function ModalReadCode({ open, setOpen }) {
   const { siiCode } = useSIICode()
-  const { cameraViewElement, enableCamera } = DynamsoftReader()
+  const { cameraViewElement, enableCamera, stopScanning } = DynamsoftReader()
   const handleOpen = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    await stopScanning()
     setOpen(false)
   }
 

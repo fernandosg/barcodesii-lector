@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useSIICode } from '../contexts/SIICodeContext'
-import DynamsoftReader from '../hooks/DynamsoftReader'
 
 const style = {
   position: 'absolute',
@@ -21,7 +20,6 @@ const style = {
 
 export default function ModalReadCode({ open, setOpen }) {
   const { siiCode } = useSIICode()
-  const { cameraViewElement, enableCamera, stopScanning } = DynamsoftReader()
   const handleOpen = () => {
     setOpen(true)
   }
@@ -35,6 +33,8 @@ export default function ModalReadCode({ open, setOpen }) {
     navigator.clipboard.writeText('SII')
     handleClose()
   }
+
+  const enableCamera = async () => {}
 
   return (
     <Modal
@@ -59,17 +59,10 @@ export default function ModalReadCode({ open, setOpen }) {
         <Button variant="contained" onClick={handleClose}>
           Cerrar lectura
         </Button>
-        <div id="camera-view-container" sx={{ width: '70%', height: '70vh' }}>
-          {cameraViewElement && (
-            <div
-              ref={(node) => {
-                if (node && !node.hasChildNodes()) {
-                  node.appendChild(cameraViewElement)
-                }
-              }}
-            />
-          )}
-        </div>
+        <div
+          id="camera-view-container"
+          sx={{ width: '70%', height: '70vh' }}
+        ></div>
       </Box>
     </Modal>
   )

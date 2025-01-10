@@ -46,17 +46,6 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 )
 
-// Cache the Dynamsoft CDN resources
-registerRoute(
-  ({ url }) => url.href.includes('cdn.jsdelivr.net/npm/dynamsoft-barcode-reader'),
-  new StaleWhileRevalidate({
-    cacheName: 'dynamsoft-resources',
-    plugins: [
-      new ExpirationPlugin({ maxEntries: 20 })
-    ]
-  })
-)
-
 // Cache image files
 registerRoute(
   ({ request }) => request.destination === 'image',
@@ -65,7 +54,7 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+        maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
       })
     ]
   })
@@ -74,8 +63,7 @@ registerRoute(
 // Cache CSS and JavaScript files
 registerRoute(
   ({ request }) =>
-    request.destination === 'script' ||
-    request.destination === 'style',
+    request.destination === 'script' || request.destination === 'style',
   new StaleWhileRevalidate({
     cacheName: 'static-resources',
     plugins: [

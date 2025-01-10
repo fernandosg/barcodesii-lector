@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useSIICode } from '../contexts/SIICodeContext'
+import StrichReader from '../hooks/StritchReader'
 
 const style = {
   position: 'absolute',
@@ -20,12 +21,14 @@ const style = {
 
 export default function ModalReadCode({ open, setOpen }) {
   const { siiCode } = useSIICode()
+  const { startScanning, stopScanning } = StrichReader()
   const handleOpen = () => {
+    startScanning()
     setOpen(true)
   }
 
   const handleClose = async () => {
-    await stopScanning()
+    stopScanning()
     setOpen(false)
   }
 
@@ -59,10 +62,8 @@ export default function ModalReadCode({ open, setOpen }) {
         <Button variant="contained" onClick={handleClose}>
           Cerrar lectura
         </Button>
-        <div
-          id="camera-view-container"
-          sx={{ width: '70%', height: '70vh' }}
-        ></div>
+        <div id="scanner" sx={{ width: '70%', height: '70vh' }}></div>
+        <div class="actions"></div>
       </Box>
     </Modal>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../dynamsoft.config' // Importar efectos secundarios. La licencia, engineResourcePath, etc.
+import '../dynamsoft.config'
 import { CameraEnhancer, CameraView } from 'dynamsoft-camera-enhancer'
 import { CaptureVisionRouter } from 'dynamsoft-capture-vision-router'
 import { MultiFrameResultCrossFilter } from 'dynamsoft-utility'
@@ -14,6 +14,15 @@ export default function DynamsoftReader() {
   const cvRouter = React.useRef(null)
   let filter = null
 
+  const stopScanning = async () => {
+    if (cvRouter.current) {
+      await cvRouter.current.stopCapturing()
+    }
+    if (cameraEnhancer.current) {
+      await cameraEnhancer.current.close()
+    }
+  }
+
   const enableCamera = async () => {
     try {
       const cameraView = await CameraView.createInstance()
@@ -24,7 +33,7 @@ export default function DynamsoftReader() {
       cvRouter.current.setInput(cameraEnhancer.current)
       let _resultText = ''
       cvRouter.current.addResultReceiver({
-        onDecodedBarcodesReceived: (result) => {
+        onDecodedBarcodesReceived: async (result) => {
           if (!result.barcodeResultItems.length) return
 
           _resultText = ''
@@ -33,9 +42,13 @@ export default function DynamsoftReader() {
             _resultText += `${item.formatString}: ${item.text}\n\n`
           }
           setSiiCode(_resultText)
+
+          // Stop scanning after detecting a code
+          if (_resultText.length > 0) {
+            await stopScanning()
+          }
         }
       })
-      if (_resultText.length > 0) console.log('Encontre algo' + _resultText)
       filter = new MultiFrameResultCrossFilter()
       filter.enableResultCrossVerification('barcode', true)
       filter.enableResultDeduplication('barcode', true)

@@ -5,7 +5,6 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useSIICode } from '../contexts/SIICodeContext'
 import StrichReader from '../hooks/StritchReader'
-import BarcodeReaderComponent from './BarcodeReader'
 
 const style = {
   position: 'absolute',
@@ -37,10 +36,6 @@ export default function ModalReadCode({ open, setOpen }) {
     navigator.clipboard.writeText('SII')
     handleClose()
   }
-  function onDetected(detections) {
-    sessionStorage.setItem('lastCodeScanned', detections[0].data)
-    //finishScanning()
-  }
 
   return (
     <Modal
@@ -67,9 +62,6 @@ export default function ModalReadCode({ open, setOpen }) {
         </Button>
         <div id="scanner" sx={{ width: '70%', height: '70vh' }}></div>
         <div className="actions"></div>
-        <BarcodeReaderComponent
-          onDetected={onDetected}
-        ></BarcodeReaderComponent>
       </Box>
     </Modal>
   )

@@ -49,7 +49,7 @@ async function initializeBarcodeReader() {
       resolution: 'full-hd'
     },
     engine: {
-      symbologies: ['code128', 'qr'],
+      symbologies: ['pdf417'],
       duplicateInterval: 1500
     }
   }

@@ -67,7 +67,7 @@
           <button id="scan_imei" data-input="imei">Scan</button>
         </div>
         <div style="margin-top: 10px">
-          <label for="imei">pdf417</label>
+          <label for="pdf417">pdf417</label>
         </div>
         <div class="input-col">
           <input type="number" id="pdf417" name="pdf417" />
@@ -174,16 +174,9 @@
             resolution: 'full-hd'
           }
         }
-        return new BarcodeReader(configuration)
-          .initialize()
-          .then((barcodeReader) => {
-            // store the BarcodeReader in a global, to be able to access it later (e.g. to destroy it)
-            window['barcodeReader'] = barcodeReader
-            barcodeReader.detected = (detections) => {
-              document.getElementById('pdf417').value = detections[0].data
-            }
-            return barcodeReader.start()
-          })
+        const detections = await PopupScanner.scan(cfg)
+        if (detections) {
+          document.getElementById('pdf417').value = detections[0].data
       }
 
       document.getElementById('scan_all').onclick = async () => {

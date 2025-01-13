@@ -177,6 +177,7 @@
         const detections = await PopupScanner.scan(cfg)
         if (detections) {
           document.getElementById('pdf417').value = detections[0].data
+        }
       }
 
       document.getElementById('scan_all').onclick = async () => {

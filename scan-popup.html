@@ -66,6 +66,13 @@
           <input type="number" id="imei" name="imei" pattern="\d{15,17}" />
           <button id="scan_imei" data-input="imei">Scan</button>
         </div>
+        <div style="margin-top: 10px">
+          <label for="imei">pdf417</label>
+        </div>
+        <div class="input-col">
+          <input type="number" id="pdf417" name="pdf417" />
+          <button id="scan_pdf417" data-input="imei">Scan</button>
+        </div>
       </section>
 
       <section>
@@ -147,6 +154,38 @@
         }
       }
 
+      document.getElementById('scan_pdf417').onclick = async () => {
+        let configuration = {
+          selector: '.container',
+          engine: {
+            symbologies: ['pdf417']
+          },
+          locator: {
+            regionOfInterest: {
+              // PDF417 is typically a wide rectangle, size the ROI appropriately
+              left: 0.05,
+              right: 0.05,
+              top: 0.3,
+              bottom: 0.3
+            }
+          },
+          frameSource: {
+            // high resolution recommended for PDF417
+            resolution: 'full-hd'
+          }
+        }
+        return new BarcodeReader(configuration)
+          .initialize()
+          .then((barcodeReader) => {
+            // store the BarcodeReader in a global, to be able to access it later (e.g. to destroy it)
+            window['barcodeReader'] = barcodeReader
+            barcodeReader.detected = (detections) => {
+              document.getElementById('pdf417').value = detections[0].data
+            }
+            return barcodeReader.start()
+          })
+      }
+
       document.getElementById('scan_all').onclick = async () => {
         let codes = {
           imei: undefined,
@@ -154,7 +193,7 @@
           mac: undefined
         }
         await PopupScanner.scan({
-          symbologies: [{ name: 'code128', minLen: 15, maxLen: 17 }],
+          symbologies: [{ name: 'pdf417', minLen: 15, maxLen: 17 }],
           detectionHandler: (detections) => {
             if (!codes.mac) {
               const pattern = document.getElementById('mac').pattern

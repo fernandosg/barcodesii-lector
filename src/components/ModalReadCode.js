@@ -4,8 +4,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useSIICode } from '../contexts/SIICodeContext'
-import StrichReader from '../hooks/StritchReader'
-import BarcodeReaderComponent from './BarcodeReader'
+import BarcodeReaderHook from '../hooks/BarcodeReader'
 
 const style = {
   position: 'absolute',
@@ -22,24 +21,14 @@ const style = {
 
 export default function ModalReadCode({ open, setOpen }) {
   const { siiCode } = useSIICode()
-  const { startScanning, stopScanning } = StrichReader()
-  const handleOpen = () => {
-    startScanning()
-    setOpen(true)
+  const barcodeReader = BarcodeReaderHook()
+  const { initReadCamera } = barcodeReader || {}
+  const handleReadCode = () => {
+    initReadCamera()
   }
 
-  const handleClose = async () => {
-    stopScanning()
+  const handleClose = () => {
     setOpen(false)
-  }
-
-  const handleCopySIICode = () => {
-    navigator.clipboard.writeText('SII')
-    handleClose()
-  }
-  function onDetected(detections) {
-    sessionStorage.setItem('lastCodeScanned', detections[0].data)
-    //finishScanning()
   }
 
   return (
@@ -50,26 +39,17 @@ export default function ModalReadCode({ open, setOpen }) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Leer código QR
-        </Typography>
+        <Button variant="contained" onClick={handleReadCode}>
+          Leer código SII
+        </Button>
         <Typography id="modal-modal-description" variant="body1" component="p">
           Sii code:{siiCode}
         </Typography>
-        <Button variant="contained" onClick={handleOpen}>
-          Habilitar cámara
-        </Button>
-        <Button variant="contained" onClick={handleCopySIICode}>
-          Copiar código SII
-        </Button>
         <Button variant="contained" onClick={handleClose}>
           Cerrar lectura
         </Button>
         <div id="scanner" sx={{ width: '70%', height: '70vh' }}></div>
         <div className="actions"></div>
-        <BarcodeReaderComponent
-          onDetected={onDetected}
-        ></BarcodeReaderComponent>
       </Box>
     </Modal>
   )

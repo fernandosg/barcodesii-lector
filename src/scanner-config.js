@@ -8,7 +8,7 @@ export function createBarcodeReaderConfig(hostElem) {
   return {
     selector: hostElem,
     engine: {
-      symbologies: ['code128', 'qr'], // this is just an example: enable only what you need!
+      symbologies: ['pdf417'], // this is just an example: enable only what you need!
       duplicateInterval: 2500
     }
   }
@@ -18,5 +18,5 @@ export function createBarcodeReaderConfig(hostElem) {
  * The STRICH SDK license key, see: https://docs.strich.io/getting-started.html#creating-a-license-key
  */
 export function sdkLicenseKey() {
-  return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMDRmMTI1My1lNWRlLTQzYTEtYTQ0ZC04YTk3YjUxZGQ5NDMiLCJpc3MiOiJzdHJpY2guaW8iLCJhdWQiOlsiaHR0cHM6Ly9naXRodWIuY29tL2Zlcm5hbmRvc2cvYmFyY29kZXNpaS1sZWN0b3IiLCJodHRwczovL2ludmVybWFyLWNoZWNrcG9pbnRzLWM5MjY2YzViMzY3OC5oZXJva3VhcHAuY29tLyJdLCJpYXQiOjE3MzY1NDQzMzksIm5iZiI6MTczNjU0NDMzOSwiY2FwYWJpbGl0aWVzIjp7fSwidmVyc2lvbiI6MX0.JEV1ohwjqpS8GdY8QjICoCHSh68FIXwktIyzOY9maXg'
+  return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMmI3ZGE1ZC0zY2I2LTQ1NDgtYTIwZi1kNzkyNmNlNDNiZjciLCJpc3MiOiJzdHJpY2guaW8iLCJhdWQiOlsiaHR0cHM6Ly9yYWlscy1wcm9kdWN0aW9uLTBmZjQudXAucmFpbHdheS5hcHAiLCJodHRwczovL2Zlcm5hbmRvc2cuZ2l0aHViLmlvL2JhcmNvZGVzaWktbGVjdG9yIl0sImlhdCI6MTczNjc5MTg1OCwibmJmIjoxNzM2NzkxODU4LCJjYXBhYmlsaXRpZXMiOnt9LCJ2ZXJzaW9uIjoxfQ.zW_RQOVsv02Tg6ijmFvltneV5mhs7DeofoifHK5swFg'
 }

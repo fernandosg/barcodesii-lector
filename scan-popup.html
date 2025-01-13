@@ -174,7 +174,7 @@
             resolution: 'full-hd'
           }
         }
-        const detections = await PopupScanner.scan(cfg)
+        const detections = await PopupScanner.scan(configuration)
         if (detections) {
           document.getElementById('pdf417').value = detections[0].data
         }

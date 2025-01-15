@@ -1,14 +1,37 @@
-import React from 'react'
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import Home from './components/Home'
-function App() {
+import { createHashRouter, RouterProvider } from 'react-router-dom'
+
+import HomePage from './pages/HomePage'
+import ResultPage from './scanner/ResultPage'
+import ScannerPage from './scanner/ScannerPage'
+import SDKProvider from './sdk'
+import SettingsPage from './settings/SettingsPage'
+import { StoreProvider } from './store'
+
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <HomePage />
+  },
+  {
+    path: '/scanner',
+    element: <ScannerPage />
+  },
+  {
+    path: '/result',
+    element: <ResultPage />
+  },
+  {
+    path: '/settings',
+    element: <SettingsPage />
+  }
+])
+
+export default function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <SDKProvider>
+      <StoreProvider>
+        <RouterProvider router={router} />
+      </StoreProvider>
+    </SDKProvider>
   )
 }
-
-export default App
